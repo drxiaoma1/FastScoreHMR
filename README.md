@@ -42,7 +42,7 @@ Evaluation code example:
 ```bash
 python eval/eval_keypoint_fitting_shortcut.py --dataset 3DPW-TEST --shuffle --use_default_ckpt
 ```
-Running the above command will compute the MPJPE and Reconstruction Error before and after single-frame model fitting with ScoreHMR on the test set of 3DPW.
+Running the above command will compute the MPJPE and Reconstruction Error before and after single-frame model fitting with FastScoreHMR on the test set of 3DPW.
 
 ## Training
 The training code uses cached image features. First, extract the PARE image features for the training datasets:
