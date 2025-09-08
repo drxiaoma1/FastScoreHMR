@@ -24,7 +24,7 @@ source download_data.sh
 ```
 This will download all necessary data files, and place them in `data/`. Alternatively, you can download them from [here](https://drive.google.com/file/d/1W53UMg8kee3HGRTNd2aNhMUew_kj36OH/view?usp=sharing) and [here](https://drive.google.com/file/d/1f-D3xhQPMC9rwtaCVNoxtD4BQh4oQbY9/view?usp=sharing). Besides these files, you also need to download the *SMPL* model. You will need the [neutral model](http://smplify.is.tue.mpg.de). Please go to the corresponding website and register to get access to the downloads section. Download the model, create a folder `data/smpl`, rename `basicModel_neutral_lbs_10_207_0_v1.0.0.pkl` to `SMPL_NEUTRAL.pkl`, and place it in `data/smpl/`.
 
-To reproduce the experimental results of **FastScoreHMR**, you need to download the **best model** we trained as mentioned in the paper. Download it from [here]() and place the model in the `data/model_weights/score_hmr` directory. 
+To reproduce the experimental results of **FastScoreHMR**, you need to download the **best model** we trained as mentioned in the paper. Download it from [here](https://drive.google.com/file/d/1wpWW7lGybdBoU3IMp-z_QG2EPkmT25_a/view?usp=drive_link) and place the model in the `data/model_weights/score_hmr` directory. 
 
 Finally, if you wish to run the evaluation and/or training code, you will need to download the images/videos for the datasets. The instructions are mostly common with the description in [here](https://github.com/nkolot/ProHMR/blob/master/dataset_preprocessing/README.md). We provide the annotations for all datasets, so you will only need to download the images/videos. Edit the `IMG_DIR` in `score_hmr/configs/datasets.yml` accordingly.
 
