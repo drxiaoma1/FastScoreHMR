@@ -13,7 +13,7 @@ Code repository for the paper:
 ## Installation and Setup
 First, clone the repository and submodules. Then, set up a new conda environment and install all dependencies, as follows:
 ```bash
-git clone --recursive 
+git clone --recursive https://github.com/drxiaoma1/FastScoreHMR.git
 cd FastScoreHMR
 source install_environment.sh
 ```
