@@ -5,7 +5,7 @@ Code adapted from https://github.com/statho/ScoreHMR/blob/master/score_hmr/model
 import torch
 from collections import OrderedDict
 from ema_pytorch import EMA
-from . import SMPL, FC
+from . import SMPL
 from . import FC_shortcut
 from .pare import PARE
 from ..shortcut import Shortcut
