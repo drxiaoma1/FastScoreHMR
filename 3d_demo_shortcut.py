@@ -133,14 +133,14 @@ def main():
 
     # Store visualization data
     vis_data = {
-        'img_names': [],        # 图像文件名（完整路径，保持3DPW结构）
-        'sample_indices': sampled_indices,  # 原始数据集中的索引
-        'sequence_names': [],   # 序列名称
-        'hmr2_verts': [],       # HMR2 顶点 [N, 6890, 3]
-        'hmr2_cam_t': [],       # HMR2 相机平移 [N, 3]
-        'opt_verts': [],        # 优化后顶点 [N, 6890, 3]
-        'opt_cam_t': [],        # 优化后相机平移 [N, 3]
-        'smpl_faces': smpl_faces,  # SMPL 面数据 [13776, 3]
+        'img_names': [],        # names of images
+        'sample_indices': sampled_indices,  # sampled indices
+        'sequence_names': [],   # sequence names
+        'hmr2_verts': [],       # [N, 6890, 3]
+        'hmr2_cam_t': [],       # [N, 3]
+        'opt_verts': [],        # [N, 6890, 3]
+        'opt_cam_t': [],        # [N, 3]
+        'smpl_faces': smpl_faces,  # [13776, 3]
     }
 
     print(f"\nProcessing {len(dataset)} samples ({args.samples_per_sequence} per sequence)...")
@@ -193,8 +193,8 @@ def main():
         opt_cam_t = dm_out['camera_translation'].cpu().numpy()  # [B, 3]
 
         # Store data
-        img_names = [name for name in batch["imgname"]]  # 完整路径
-        sequence_names = [Path(name).parent.name for name in img_names]  # 序列名称
+        img_names = [name for name in batch["imgname"]]
+        sequence_names = [Path(name).parent.name for name in img_names]
         
         vis_data['img_names'].extend(img_names)
         vis_data['sequence_names'].extend(sequence_names)
