@@ -43,7 +43,7 @@ class FC_shortcut(nn.Module):
             nn.Linear(time_dim, time_dim),
         )
         
-        # 添加step_size的嵌入层
+        # NEW block for step size embedding, ONLY for shortcut model
         self.step_size_mlp = nn.Sequential(
             sinu_pos_emb, 
             nn.Linear(fourier_dim, time_dim),
@@ -54,13 +54,13 @@ class FC_shortcut(nn.Module):
         self.init_mlp = nn.Linear(in_features=self.thetas_dim, out_features=self.thetas_dim)
         self.blocks = nn.ModuleList([])
 
-        # 修改blocks以接受step_size条件
+        # Use several ResMLP blocks
         for _ in range(cfg.MODEL.DENOISING_MODEL.NUM_BLOCKS_POSE):
             self.blocks.append(
                 ResMLPBlock(
                     input_dim=self.thetas_dim,
                     hidden_dim=hidden_dim,
-                    time_emb_dim=time_dim * 2,  # 合并时间和step_size嵌入
+                    time_emb_dim=time_dim * 2,  # Double for concatenated time+step emb
                     cond_emb_dim=self.thetas_emb_dim,
                 )
             )
@@ -120,26 +120,13 @@ class FC_shortcut(nn.Module):
             thetas = x
 
         thetas = self.init_mlp(thetas)
-        # print(f"time shape: {time.shape}")  # 应该是[batch_size]
-        # print(f"time values: {time}")  # 打印time的值
         tt = self.time_mlp(time)
-        # print("Time embedding shape:", tt.shape)
-        # print("Time embedding values:", tt)
 
-        # print("Step size shape:", step_size.shape)  # 应该是[batch_size]
-        # print("Step size values:", step_size)
-
-        # ss = step_size.unsqueeze(-1)
-        # print("After unsqueeze:", ss.shape)  # 应该是[batch_size, 1]
-        # print("Step size values after unsqueeze:", ss)
-
-        # step_size嵌入
+        # step_size embedding
         ss = self.step_size_mlp(step_size)  # [B, step_size_emb_dim]
-        # print("Step size embedding shape:", ss.shape)
-        # print("Step size embedding values:", ss)
 
-        # 合并时间和step_size嵌入
-        time_step_emb = torch.cat([tt, ss], dim=-1)  # 应为[batch_size, time_dim*2]
+        # Concatenate time and step size embeddings
+        time_step_emb = torch.cat([tt, ss], dim=-1)  # [B, time_dim*2]
         
         thetas = self.init_mlp(thetas)
         for block in self.blocks:
